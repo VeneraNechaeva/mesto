@@ -10,3 +10,4 @@
 ## Технологии
 Используются HTML, JavaScript, CSS, методолия БЭМ с файловой структурой Nested.
 ## Ссылка на страницу
+https://veneranechaeva.github.io/mesto/
