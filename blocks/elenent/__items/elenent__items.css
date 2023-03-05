@@ -1,0 +1,6 @@
+.elenent__items {
+  padding: 25px 15px 31px 20px;
+  max-width: 282px;
+  display: flex;
+  justify-content: space-between;
+}
