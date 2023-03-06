@@ -15,28 +15,21 @@
 
     <div class="popup">
       <div class="popup__container">
-        <button class="popup__close-icon"></button>
+        <button class="popup__close-icon" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form">
-          <fieldset class="popup__name">
-            <input class="popup__text-name" type="text" placeholde="Имя" value="Жак-Ив Кусто">
-          </fieldset>
-          <div class="popup__line"></div>
-          <fieldset class="popup__info">
-            <input class="popup__text-info" type="text" placeholde="О себе" value="Исследователь океана">
-          </fieldset>
-          <div class="popup__line"></div>
-          <button class="popup__button" type="submit">
-            <p class="popup__button-text">Сохранить</p>
-          </button>
+        <form class="popup__form" name="edit-profile">
+          <input class="popup__field popup__field_text_name" type="text" name="name" placeholder="Имя"
+            value="Жак-Ив Кусто">
+          <input class="popup__field popup__field_text_info" type="text" name="info" placeholder="О себе"
+            value="Исследователь океана">
+          <button class="popup__button" type="submit">Сохранить</button>
         </form>
       </div>
     </div>
 
 
-    <header class="header page__padding-none">
+    <header class="header page__margin">
       <img class="header__logo" src="./images/Vector.svg" alt="сервис Mesto">
-      <div class="header__line"></div>
     </header>
 
 
@@ -46,65 +39,64 @@
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__subtitle">Исследователь океана</p>
-          <button class="profile__edit-button"></button>
+          <button class="profile__edit-button" type="button"></button>
         </div>
-        <button class="profile__add-button"></button>
+        <button class="profile__add-button" type="button"></button>
       </section>
 
 
       <section class="elenents page__padding">
-        <div class="elenent">
+        <article class="elenent">
           <img class="elenent__image" src="./images/Saint-Petersburg.jpg"
             alt="Исаакиевский собор в Санкт-Перебрурге вечером">
           <div class="elenent__items">
             <h2 class="elenent__text">Санкт-Петербург</h2>
-            <button class="elenent__icon-like"></button>
+            <button class="elenent__icon-like" type="button"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="elenent">
+        <article class="elenent">
           <img class="elenent__image" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус вдали">
           <div class="elenent__items">
             <h2 class="elenent__text">Гора Эльбрус</h2>
             <button class="elenent__icon-like"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="elenent">
+        <article class="elenent">
           <img class="elenent__image" src="./images/kirill-pershin-1556355-unsplash.jpg"
             alt="Лес и заснеженные горы в Домбае">
           <div class="elenent__items">
             <h2 class="elenent__text">Домбай</h2>
             <button class="elenent__icon-like"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="elenent">
+        <article class="elenent">
           <img class="elenent__image" src="./images/philipp-trubchenko-08lvM7w-G30-unsplash.jpg"
             alt="Машина едет по льду озера Байкал">
           <div class="elenent__items">
             <h2 class="elenent__text">Байкал</h2>
             <button class="elenent__icon-like"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="elenent">
-          <img class="elenent__image" src="./images/Tomsk.jpg"
-            alt="Город Томск вид с высоты">
+        <article class="elenent">
+          <img class="elenent__image" src="./images/Tomsk.jpg" alt="Город Томск вид с высоты">
           <div class="elenent__items">
             <h2 class="elenent__text">Томск</h2>
             <button class="elenent__icon-like"></button>
           </div>
-        </div>
+        </article>
 
-        <div class="elenent">
+        <article class="elenent">
           <img class="elenent__image" src="./images/kirill-pershin-1088404-unsplash.jpg"
             alt="Сентинский храм на фоне гор">
           <div class="elenent__items">
             <h2 class="elenent__text">Карачаево-Черкессия</h2>
             <button class="elenent__icon-like"></button>
           </div>
-        </div>
+        </article>
       </section>
     </main>
 
@@ -112,7 +104,7 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
   </div>
-  <script src="./scripts/script.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 
 </html>

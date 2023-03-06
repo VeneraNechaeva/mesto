@@ -25,8 +25,8 @@ formElement.addEventListener('submit', handleFormSubmit);
 function handleFormSubmit(evt) {
   evt.preventDefault();
 
-  let nameInput = formElement.querySelector('.popup__text-name');
-  let jobInput = formElement.querySelector('.popup__text-info');
+  let nameInput = formElement.querySelector('.popup__field_text_name');
+  let jobInput = formElement.querySelector('.popup__field_text_info');
 
   const profileElement = document.querySelector('.profile');
   const profileNameElement = profileElement.querySelector('.profile__title');

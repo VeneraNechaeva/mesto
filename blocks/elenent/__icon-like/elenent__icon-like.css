@@ -15,8 +15,3 @@
   transition-duration: 0.4s;
   opacity: 0.5;
 }
-
-.elenent__icon-like_active {
-  background-image: url(../../../images/Vector-icon-like-active.svg);
-}
-
