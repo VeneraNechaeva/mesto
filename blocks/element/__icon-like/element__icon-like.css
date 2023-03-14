@@ -1,4 +1,4 @@
-.elenent__icon-like {
+.element__icon-like {
   width: 22px;
   height: 19px;
   border: none;
@@ -10,7 +10,7 @@
   transition-duration: 0.4s;
 }
 
-.elenent__icon-like:hover {
+.element__icon-like:hover {
   transition: linear;
   transition-duration: 0.4s;
   opacity: 0.5;
