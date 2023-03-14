@@ -13,7 +13,7 @@
   <div class="page__container">
 
 
-    <div class="popup">
+    <div class="popup popup_edit">
       <div class="popup__container">
         <button class="popup__close-icon" type="button"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
@@ -22,6 +22,28 @@
           <input class="popup__field popup__field_text_info" type="text" name="info" placeholder="О себе">
           <button class="popup__button" type="submit">Сохранить</button>
         </form>
+      </div>
+    </div>
+
+
+    <div class="popup popup_add">
+      <div class="popup__container">
+        <button class="popup__close-icon" type="button"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="new-place">
+          <input class="popup__field popup__field_text_name-place" type="text" name="place" placeholder="Название">
+          <input class="popup__field popup__field_text_link" type="text" name="link" placeholder="Ссылка">
+          <button class="popup__button" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+
+
+    <div class="popup popup_img">
+      <div class="popup__container-img">
+        <button class="popup__close-icon" type="button"></button>
+        <img class="popup__image" src="" alt="">
+        <p class="popup__text"></p>
       </div>
     </div>
 
@@ -43,58 +65,17 @@
       </section>
 
 
-      <section class="elenents page__padding">
-        <article class="elenent">
-          <img class="elenent__image" src="./images/Saint-Petersburg.jpg"
-            alt="Исаакиевский собор в Санкт-Перебрурге вечером">
-          <div class="elenent__items">
-            <h2 class="elenent__text">Санкт-Петербург</h2>
-            <button class="elenent__icon-like" type="button"></button>
-          </div>
-        </article>
-
-        <article class="elenent">
-          <img class="elenent__image" src="./images/kirill-pershin-1404681-unsplash.jpg" alt="Гора Эльбрус вдали">
-          <div class="elenent__items">
-            <h2 class="elenent__text">Гора Эльбрус</h2>
-            <button class="elenent__icon-like" type="button"></button>
-          </div>
-        </article>
-
-        <article class="elenent">
-          <img class="elenent__image" src="./images/kirill-pershin-1556355-unsplash.jpg"
-            alt="Лес и заснеженные горы в Домбае">
-          <div class="elenent__items">
-            <h2 class="elenent__text">Домбай</h2>
-            <button class="elenent__icon-like" type="button"></button>
-          </div>
-        </article>
-
-        <article class="elenent">
-          <img class="elenent__image" src="./images/philipp-trubchenko-08lvM7w-G30-unsplash.jpg"
-            alt="Машина едет по льду озера Байкал">
-          <div class="elenent__items">
-            <h2 class="elenent__text">Байкал</h2>
-            <button class="elenent__icon-like" type="button"></button>
-          </div>
-        </article>
-
-        <article class="elenent">
-          <img class="elenent__image" src="./images/Tomsk.jpg" alt="Город Томск вид с высоты">
-          <div class="elenent__items">
-            <h2 class="elenent__text">Томск</h2>
-            <button class="elenent__icon-like" type="button"></button>
-          </div>
-        </article>
-
-        <article class="elenent">
-          <img class="elenent__image" src="./images/kirill-pershin-1088404-unsplash.jpg"
-            alt="Сентинский храм на фоне гор">
-          <div class="elenent__items">
-            <h2 class="elenent__text">Карачаево-Черкессия</h2>
-            <button class="elenent__icon-like" type="button"></button>
-          </div>
-        </article>
+      <section class="elements page__padding">
+        <template id="card">
+          <article class="element">
+            <button class="element__delete-button" type="button"></button>
+            <img class="element__image" src="" alt="">
+            <div class="element__items">
+              <h2 class="element__text"></h2>
+              <button class="element__icon-like" type="button"></button>
+            </div>
+          </article>
+        </template>
       </section>
     </main>
 
