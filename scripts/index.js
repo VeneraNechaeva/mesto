@@ -10,8 +10,8 @@ const profileInfoElement = profileElement.querySelector('.profile__subtitle');
 
 const formElement = popupElement.querySelector('.popup__form');
 
-let nameInput = formElement.querySelector('.popup__field_text_name');
-let jobInput = formElement.querySelector('.popup__field_text_info');
+const nameInput = formElement.querySelector('.popup__field_text_name');
+const jobInput = formElement.querySelector('.popup__field_text_info');
 
 const openPopup = function () {
   popupElement.classList.add('popup_opened');
@@ -39,52 +39,31 @@ function handleFormSubmit(evt) {
   closePopup();
 }
 
-//1. Шесть карточек «из коробки»
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+
+const cardTemplate = document.querySelector('#card').content;
+const cardElements = document.querySelector('.elements');
 
 //Добавляем 6 карточек, которые видны при загрузке страницы
-function createCard(obj) {
-  const cardTemplate = document.querySelector('#card').content;
+function createCard(cardData) {
+
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
-  cardElement.querySelector('.element__image').src = obj.link;
-  cardElement.querySelector('.element__text').textContent = obj.name;
-  cardElement.querySelector('.element__image').alt = obj.name;
+  const imageElement = cardElement.querySelector('.element__image');
+
+  imageElement.src = cardData.link;
+  imageElement.alt = cardData.name;
+  cardElement.querySelector('.element__text').textContent = cardData.name;
+
 
   likeElement(cardElement);
   deleteElement(cardElement);
-  openImg(cardElement, obj);
+  openImg(cardElement, cardData);
 
   return cardElement;
 }
 
 initialCards.forEach(element => {
-  let newCard = createCard(element);
-  document.querySelector('.elements').append(newCard);
+  const newCard = createCard(element);
+  cardElements.append(newCard);
 });
 
 
@@ -101,14 +80,12 @@ const ItemElement = document.querySelector('.element');
 const ElementImage = ItemElement.querySelector('.element__image');
 const ElementText = ItemElement.querySelector('.element__text');
 
-let placeInput = formAddElement.querySelector('.popup__field_text_name-place');
-let linkInput = formAddElement.querySelector('.popup__field_text_link');
+const placeInput = formAddElement.querySelector('.popup__field_text_name-place');
+const linkInput = formAddElement.querySelector('.popup__field_text_link');
 
 const openAddPopup = function () {
   popupAddElement.classList.add('popup_opened');
-
-  placeInput.value = null;
-  linkInput.value = null;
+  formAddElement.reset();
 };
 
 const closeAddPopup = function () {
@@ -125,13 +102,13 @@ formAddElement.addEventListener('submit', handleFormCardSubmit);
 function handleFormCardSubmit(evt) {
   evt.preventDefault();
 
-  const obj = {
+  const cardData = {
     name: placeInput.value,
     link: linkInput.value,
   }
 
-  const createNewCard = createCard(obj);
-  document.querySelector('.elements').prepend(createNewCard);
+  const createNewCard = createCard(cardData);
+  cardElements.prepend(createNewCard);
   closeAddPopup();
 }
 
@@ -156,11 +133,11 @@ const popupImgCloseButtonElement = popupImgElement.querySelector('.popup__close-
 const popupImg = popupImgElement.querySelector('.popup__image');
 const popupText = popupImgElement.querySelector('.popup__text');
 
-const openImgPopup = function (obj) {
+const openImgPopup = function (cardData) {
   popupImgElement.classList.add('popup_opened');
-  popupImg.src = obj.link;
-  popupImg.alt = obj.name;
-  popupText.textContent = obj.name;
+  popupImg.src = cardData.link;
+  popupImg.alt = cardData.name;
+  popupText.textContent = cardData.name;
 };
 
 const closeImgPopup = function () {
@@ -169,9 +146,9 @@ const closeImgPopup = function () {
 
 popupImgCloseButtonElement.addEventListener('click', closeImgPopup);
 
-function openImg(elem, obj) {
+function openImg(elem, cardData) {
   elem.querySelector('.element__image').addEventListener('click', function (evt) {
-    openImgPopup(obj);
+    openImgPopup(cardData);
   });
 }
 
