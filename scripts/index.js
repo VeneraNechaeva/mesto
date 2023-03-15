@@ -1,4 +1,5 @@
-// Открытие и закрытие попапа редактирования профиля
+// Переменные открытия и закрытия попапа редактирования профиля
+// Форма открывается нажатием на кнопку «edit» и закрывается кликом на крестик
 const popupElement = document.querySelector('.popup_edit');
 const popupCloseButtonElement = popupElement.querySelector('.popup__close-icon');
 
@@ -13,6 +14,30 @@ const formElement = popupElement.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__field_text_name');
 const jobInput = formElement.querySelector('.popup__field_text_info');
 
+const cardTemplate = document.querySelector('#card').content;
+const cardElements = document.querySelector('.elements');
+// Переменные формы добавления карточек
+// Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик
+const popupAddElement = document.querySelector('.popup_add');
+const popupAddCloseButtonElement = popupAddElement.querySelector('.popup__close-icon');
+const formAddElement = popupAddElement.querySelector('.popup__form');
+
+const profileAddElement = document.querySelector('.profile');
+const popupAddOpenButtonElement = profileAddElement.querySelector('.profile__add-button');
+
+const placeInput = formAddElement.querySelector('.popup__field_text_name-place');
+const linkInput = formAddElement.querySelector('.popup__field_text_link');
+// Переменные открытия попапа с картинкой
+// Открывается нажатием на картинку и закрывается кликом на крестик:
+const popupImgElement = document.querySelector('.popup_img');
+const popupImgCloseButtonElement = popupImgElement.querySelector('.popup__close-icon');
+const popupImg = popupImgElement.querySelector('.popup__image');
+const popupText = popupImgElement.querySelector('.popup__text');
+
+
+
+
+// Функции открытия и закрытия попапа редактирования профиля
 const openPopup = function () {
   popupElement.classList.add('popup_opened');
   nameInput.value = profileNameElement.textContent;
@@ -27,7 +52,7 @@ popupOpenButtonElement.addEventListener('click', openPopup);
 popupCloseButtonElement.addEventListener('click', closePopup);
 
 
-// Редактирование имени и информации о себе
+// Функция редактирования имени и информации о себе
 formElement.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(evt) {
@@ -40,19 +65,14 @@ function handleFormSubmit(evt) {
 }
 
 
-const cardTemplate = document.querySelector('#card').content;
-const cardElements = document.querySelector('.elements');
-
-//Добавляем 6 карточек, которые видны при загрузке страницы
+// Добавление 6 карточек, которые видны при загрузке страницы
 function createCard(cardData) {
-
   const cardElement = cardTemplate.querySelector('.element').cloneNode(true);
   const imageElement = cardElement.querySelector('.element__image');
 
   imageElement.src = cardData.link;
   imageElement.alt = cardData.name;
   cardElement.querySelector('.element__text').textContent = cardData.name;
-
 
   likeElement(cardElement);
   deleteElement(cardElement);
@@ -67,22 +87,8 @@ initialCards.forEach(element => {
 });
 
 
-//2. Форма добавления карточки
-//Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик:
-const popupAddElement = document.querySelector('.popup_add');
-const popupAddCloseButtonElement = popupAddElement.querySelector('.popup__close-icon');
-const formAddElement = popupAddElement.querySelector('.popup__form');
-
-const profileAddElement = document.querySelector('.profile');
-const popupAddOpenButtonElement = profileAddElement.querySelector('.profile__add-button');
-
-const ItemElement = document.querySelector('.element');
-const ElementImage = ItemElement.querySelector('.element__image');
-const ElementText = ItemElement.querySelector('.element__text');
-
-const placeInput = formAddElement.querySelector('.popup__field_text_name-place');
-const linkInput = formAddElement.querySelector('.popup__field_text_link');
-
+// Функция формы добавления карточки
+// Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик:
 const openAddPopup = function () {
   popupAddElement.classList.add('popup_opened');
   formAddElement.reset();
@@ -96,7 +102,7 @@ popupAddOpenButtonElement.addEventListener('click', openAddPopup);
 popupAddCloseButtonElement.addEventListener('click', closeAddPopup);
 
 
-//3. Добавление карточки по заполнению из формы
+// Функция добавления карточки по заполнению из формы
 formAddElement.addEventListener('submit', handleFormCardSubmit);
 
 function handleFormCardSubmit(evt) {
@@ -112,27 +118,22 @@ function handleFormCardSubmit(evt) {
   closeAddPopup();
 }
 
-//4. Лайк карточки
+// Лайк карточки
 function likeElement(elem) {
   elem.querySelector('.element__icon-like').addEventListener('click', function (evt) {
     evt.target.classList.toggle('element__icon-like_active');
   });
 }
 
-//5. Удаление карточки
+// Удаление карточки
 function deleteElement(elem) {
   elem.querySelector('.element__delete-button').addEventListener('click', function (evt) {
     evt.target.closest('.element').remove();
   });
 }
 
-//6. Открытие попапа с картинкой
-//открывается нажатием на картинку и закрывается кликом на крестик:
-const popupImgElement = document.querySelector('.popup_img');
-const popupImgCloseButtonElement = popupImgElement.querySelector('.popup__close-icon');
-const popupImg = popupImgElement.querySelector('.popup__image');
-const popupText = popupImgElement.querySelector('.popup__text');
-
+// Открытие попапа с картинкой
+// Открывается нажатием на картинку и закрывается кликом на крестик
 const openImgPopup = function (cardData) {
   popupImgElement.classList.add('popup_opened');
   popupImg.src = cardData.link;
