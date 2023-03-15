@@ -1,26 +1,26 @@
 // Функции открытия и закрытия попапа редактирования профиля
 const openPopup = function () {
-  popupElement.classList.add('popup_opened');
-  nameInput.value = profileNameElement.textContent;
-  jobInput.value = profileInfoElement.textContent;
+  popupEditProfile.classList.add('popup_opened');
+  nameInput.value = profileName.textContent;
+  infoInput.value = profileInfo.textContent;
 };
 
 const closePopup = function () {
-  popupElement.classList.remove('popup_opened');
+  popupEditProfile.classList.remove('popup_opened');
 };
 
-popupOpenButtonElement.addEventListener('click', openPopup);
-popupCloseButtonElement.addEventListener('click', closePopup);
+profileEditButton.addEventListener('click', openPopup);
+popupCloseButton.addEventListener('click', closePopup);
 
 
 // Функция редактирования имени и информации о себе
-formElement.addEventListener('submit', handleFormSubmit);
+popupFormEdit.addEventListener('submit', handleFormSubmit);
 
 function handleFormSubmit(evt) {
   evt.preventDefault();
 
-  profileNameElement.textContent = nameInput.value;
-  profileInfoElement.textContent = jobInput.value;
+  profileName.textContent = nameInput.value;
+  profileInfo.textContent = infoInput.value;
 
   closePopup();
 }
@@ -51,20 +51,20 @@ initialCards.forEach(element => {
 // Функция формы добавления карточки
 // Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик:
 const openAddPopup = function () {
-  popupAddElement.classList.add('popup_opened');
-  formAddElement.reset();
+  popupAddCard.classList.add('popup_opened');
+  popupFormAdd.reset();
 };
 
 const closeAddPopup = function () {
-  popupAddElement.classList.remove('popup_opened');
+  popupAddCard.classList.remove('popup_opened');
 };
 
-popupAddOpenButtonElement.addEventListener('click', openAddPopup);
-popupAddCloseButtonElement.addEventListener('click', closeAddPopup);
+profileAddButton.addEventListener('click', openAddPopup);
+popupAddCloseButton.addEventListener('click', closeAddPopup);
 
 
 // Функция добавления карточки по заполнению из формы
-formAddElement.addEventListener('submit', handleFormCardSubmit);
+popupFormAdd.addEventListener('submit', handleFormCardSubmit);
 
 function handleFormCardSubmit(evt) {
   evt.preventDefault();
@@ -96,17 +96,17 @@ function deleteElement(elem) {
 // Открытие попапа с картинкой
 // Открывается нажатием на картинку и закрывается кликом на крестик
 const openImgPopup = function (cardData) {
-  popupImgElement.classList.add('popup_opened');
-  popupImg.src = cardData.link;
-  popupImg.alt = cardData.name;
+  popupOpenImage.classList.add('popup_opened');
+  popupImage.src = cardData.link;
+  popupImage.alt = cardData.name;
   popupText.textContent = cardData.name;
 };
 
 const closeImgPopup = function () {
-  popupImgElement.classList.remove('popup_opened');
+  popupOpenImage.classList.remove('popup_opened');
 };
 
-popupImgCloseButtonElement.addEventListener('click', closeImgPopup);
+popupImageCloseButton.addEventListener('click', closeImgPopup);
 
 function openImg(elem, cardData) {
   elem.querySelector('.element__image').addEventListener('click', function (evt) {
