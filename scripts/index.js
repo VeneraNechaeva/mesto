@@ -71,15 +71,59 @@ function deleteElement(elem) {
   });
 }
 
+//Функция очистки полей от ошибки
+function clearField(popup) {
+  const errortList = Array.from(popup.querySelectorAll('.popup__error'));
+  errortList.forEach(errorElement => {
+    errorElement.textContent = '';
+  });
+  const inputList = Array.from(popup.querySelectorAll('.popup__field'));
+  inputList.forEach(inputElement => {
+    inputElement.classList.remove('popup__field_type_error');
+  });
+};
+
 // Функция открытия попапа (общая)
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  disableButtonSubmit(popup);
+  clearField(popup);
 }
 
 // Функция закрытия попапа (общая)
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
+
+// Функция закрытия попапа кликом на оверлей
+const closePopupByOverlay = () => {
+  const PopupList = Array.from(document.querySelectorAll('.popup'));
+  PopupList.forEach(popup => {
+    popup.addEventListener('click', function (evt) {
+      if (evt.target === evt.currentTarget) {
+        closePopup(popup);
+      };
+    });
+  });
+};
+
+closePopupByOverlay(closePopup);
+
+// Функция сделать кнопку submit не активной при открытии попапа
+// Проверим есть ли кнопка у попапа, если есть, тогда сделать неактивной
+const disableButtonSubmit = (popup) => {
+  const Button = popup.querySelector('.popup__button');
+  if (Button !== null) {
+    Button.classList.add('popup__button_disabled');
+  };
+};
+
+// Функция закрытия попапа нажатием на Esc
+const closePopupByEsc = (evt, activePopup) => {
+  if (evt.key === "Escape") {
+    closePopup(activePopup);
+  };
+};
 
 // Функция открытия попапа "редактирование профиля"
 // Заполнение полей при каждом открытии
@@ -91,7 +135,7 @@ function openPopupEdit(popup) {
 
 // Функция закрытия попапа "редактирование профиля"
 // и сохранения имени и информации о себе
-function handleFormSubmit(evt) {
+function submitEditProfileForm(evt) {
   evt.preventDefault();
 
   profileName.textContent = nameInput.value;
@@ -140,7 +184,7 @@ popupCloseButton.addEventListener('click', function (evt) {
   closePopup(popupEditProfile);
 });
 // Сохранииение данных и закрытие попапа (кнопка "Сохранить")
-popupFormEdit.addEventListener('submit', handleFormSubmit);
+popupFormEdit.addEventListener('submit', submitEditProfileForm);
 
 
 // Открытие и закрытие попапа "добавление карточки"
@@ -165,4 +209,12 @@ function openImg(elem, cardData) {
 // Закрытие попапа с картинкой кликом на «x»
 popupImageCloseButton.addEventListener('click', function (evt) {
   closePopup(popupOpenImage);
+});
+
+// Закрытие активного попапа
+document.addEventListener('keydown', function (evt) {
+  const activePopup = document.querySelector('.popup_opened');
+  if (activePopup !== null) {
+    closePopupByEsc(evt, activePopup);
+  };
 });
