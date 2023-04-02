@@ -22,12 +22,11 @@ const enableValidation = ({ formSelector, ...rest }) => {
 
 //Добавление обработчиков всем полям формы
 //Выбираем ИМПУТ из массива и накладываем обработчик
-//Или const setEventListeners = (formElement) => {   ??????????????????????????????
 const setEventListeners = (formElement, { inputSelector, submitButtonSelector, ...rest }) => {
   // Найдём все поля текущей формы и сделаем из них массив
-  const inputList = Array.from(formElement.querySelectorAll(inputSelector)); //???????????
+  const inputList = Array.from(formElement.querySelectorAll(inputSelector));
   // Найдём в текущей форме кнопку отправки
-  const buttonElement = formElement.querySelector(submitButtonSelector);//???????????
+  const buttonElement = formElement.querySelector(submitButtonSelector);
   //Пройдемся по каждому импуту и вызовем для каждого из них функцию checkInputValidity
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
