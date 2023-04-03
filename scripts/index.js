@@ -51,6 +51,7 @@ function createCard(cardData) {
 
   return cardElement;
 }
+
 //Функция добавление 6 карточек, которые видны при загрузке страницы
 initialCards.forEach(element => {
   const newCard = createCard(element);
@@ -86,19 +87,19 @@ function clearField(popup) {
 // Функция открытия попапа (общая)
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  disableButtonSubmit(popup);
-  clearField(popup);
+  document.addEventListener('keydown', closePopupByEsc);
 }
 
 // Функция закрытия попапа (общая)
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupByEsc);
 }
 
 // Функция закрытия попапа кликом на оверлей
 const closePopupByOverlay = () => {
-  const PopupList = Array.from(document.querySelectorAll('.popup'));
-  PopupList.forEach(popup => {
+  const popupList = Array.from(document.querySelectorAll('.popup'));
+  popupList.forEach(popup => {
     popup.addEventListener('click', function (evt) {
       if (evt.target === evt.currentTarget) {
         closePopup(popup);
@@ -107,21 +108,16 @@ const closePopupByOverlay = () => {
   });
 };
 
-closePopupByOverlay(closePopup);
+closePopupByOverlay();
 
-// Функция сделать кнопку submit не активной при открытии попапа
-// Проверим есть ли кнопка у попапа, если есть, тогда сделать неактивной
-const disableButtonSubmit = (popup) => {
-  const Button = popup.querySelector('.popup__button');
-  if (Button !== null) {
-    Button.classList.add('popup__button_disabled');
-  };
-};
 
 // Функция закрытия попапа нажатием на Esc
-const closePopupByEsc = (evt, activePopup) => {
-  if (evt.key === "Escape") {
-    closePopup(activePopup);
+function closePopupByEsc(evt) {
+  if (evt.key === 'Escape') {
+    const activePopup = document.querySelector('.popup_opened');
+    if (activePopup !== null) {
+      closePopup(activePopup)
+    };
   };
 };
 
@@ -131,6 +127,7 @@ function openPopupEdit(popup) {
   nameInput.value = profileName.textContent;
   infoInput.value = profileInfo.textContent;
   openPopup(popup);
+  clearField(popup);
 }
 
 // Функция закрытия попапа "редактирование профиля"
@@ -145,7 +142,6 @@ function submitEditProfileForm(evt) {
 
 // Функция открытия попапа "добавление карточки"
 function openPopupAdd(popup) {
-  popupFormAdd.reset();
   openPopup(popup);
 }
 
@@ -158,6 +154,8 @@ function handleFormCardSubmit(evt) {
     name: placeInput.value,
     link: linkInput.value,
   }
+
+  popupFormAdd.reset();
 
   const createNewCard = createCard(cardData);
   cardElements.prepend(createNewCard);
@@ -206,15 +204,8 @@ function openImg(elem, cardData) {
     openPopupImg(cardData);
   });
 }
+
 // Закрытие попапа с картинкой кликом на «x»
 popupImageCloseButton.addEventListener('click', function (evt) {
   closePopup(popupOpenImage);
-});
-
-// Закрытие активного попапа
-document.addEventListener('keydown', function (evt) {
-  const activePopup = document.querySelector('.popup_opened');
-  if (activePopup !== null) {
-    closePopupByEsc(evt, activePopup);
-  };
 });
