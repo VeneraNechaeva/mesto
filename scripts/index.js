@@ -102,7 +102,7 @@ const closePopupByOverlay = () => {
   popupList.forEach(popup => {
     popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened')) {
-          closePopup(popup)
+        closePopup(popup)
       }
       if (evt.target.classList.contains('popup__close-icon')) {
         closePopup(popup)
