@@ -96,14 +96,17 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupByEsc);
 }
 
-// Функция закрытия попапа кликом на оверлей
+// Функция закрытия попапов кликом на оверлей или на "х"
 const closePopupByOverlay = () => {
   const popupList = Array.from(document.querySelectorAll('.popup'));
   popupList.forEach(popup => {
-    popup.addEventListener('click', function (evt) {
-      if (evt.target === evt.currentTarget) {
-        closePopup(popup);
-      };
+    popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+          closePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close-icon')) {
+        closePopup(popup)
+      }
     });
   });
 };
@@ -173,29 +176,23 @@ function openPopupImg(cardData) {
 
 
 // УСТАНОВКА СЛУШАТЕЛЕЙ
-// Открытие и закрытие попапа редактирования профиля
-// Открывается по кнопке редактирования и закрывается на «x»
+// Открытие попапа редактирования профиля
+// Открывается по кнопке редактирования
 profileEditButton.addEventListener('click', function (evt) {
   openPopupEdit(popupEditProfile);
 });
-popupCloseButton.addEventListener('click', function (evt) {
-  closePopup(popupEditProfile);
-});
+
 // Сохранииение данных и закрытие попапа (кнопка "Сохранить")
 popupFormEdit.addEventListener('submit', submitEditProfileForm);
 
 
 // Открытие и закрытие попапа "добавление карточки"
-// Открывается на кнопку «+» и закрывается кликом на «x»
 profileAddButton.addEventListener('click', function (evt) {
   openPopupAdd(popupAddCard);
 });
-popupAddCloseButton.addEventListener('click', function (evt) {
-  closePopup(popupAddCard);
-});
+
 // Сохранение данных, добавление карточки, закрытие попапа (кнопка "Создать")
 popupFormAdd.addEventListener('submit', handleFormCardSubmit);
-
 
 // Установка слушателя открытия попапа с картинкой
 // Открывается кликом на кртинку в карточке
@@ -204,8 +201,3 @@ function openImg(elem, cardData) {
     openPopupImg(cardData);
   });
 }
-
-// Закрытие попапа с картинкой кликом на «x»
-popupImageCloseButton.addEventListener('click', function (evt) {
-  closePopup(popupOpenImage);
-});
