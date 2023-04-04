@@ -29,7 +29,7 @@ const setEventListeners = (formElement, { inputSelector, submitButtonSelector, .
   const buttonElement = formElement.querySelector(submitButtonSelector);
 
   formElement.addEventListener('reset', () => {
-    disableButtonSubmit(formElement)
+    disableButtonSubmit(buttonElement, rest)
   });
 
   toggleButtonState(inputList, buttonElement, rest);
@@ -96,8 +96,7 @@ const toggleButtonState = (inputList, buttonElement, { inactiveButtonClass }) =>
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
-    buttonElement.classList.add(inactiveButtonClass);
-    buttonElement.setAttribute("disabled", "disabled");
+    disableButtonSubmit(buttonElement, inactiveButtonClass);
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(inactiveButtonClass);
@@ -108,9 +107,11 @@ const toggleButtonState = (inputList, buttonElement, { inactiveButtonClass }) =>
 
 // Функция сделать кнопку submit не активной при открытии попапа
 // Проверим есть ли кнопка у попапа, если есть, тогда сделать неактивной
-const disableButtonSubmit = (popup) => {
-  const button = popup.querySelector('.popup__button');
-  button.classList.add('popup__button_disabled');
+const disableButtonSubmit = (buttonElement, { inactiveButtonClass }) => {
+  buttonElement.classList.add(inactiveButtonClass);
+  buttonElement.setAttribute("disabled", "disabled");
 };
 
 enableValidation(settingsObject);
+
+
