@@ -96,7 +96,7 @@ const toggleButtonState = (inputList, buttonElement, { inactiveButtonClass }) =>
   // Если есть хотя бы один невалидный инпут
   if (hasInvalidInput(inputList)) {
     // сделай кнопку неактивной
-    disableButtonSubmit(buttonElement, inactiveButtonClass);
+    disableButtonSubmit(buttonElement, {inactiveButtonClass});
   } else {
     // иначе сделай кнопку активной
     buttonElement.classList.remove(inactiveButtonClass);
@@ -106,7 +106,6 @@ const toggleButtonState = (inputList, buttonElement, { inactiveButtonClass }) =>
 
 
 // Функция сделать кнопку submit не активной при открытии попапа
-// Проверим есть ли кнопка у попапа, если есть, тогда сделать неактивной
 const disableButtonSubmit = (buttonElement, { inactiveButtonClass }) => {
   buttonElement.classList.add(inactiveButtonClass);
   buttonElement.setAttribute("disabled", "disabled");
