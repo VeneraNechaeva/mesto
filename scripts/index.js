@@ -34,7 +34,6 @@ const popupImageCloseButton = popupOpenImage.querySelector('.popup__close-icon')
 const popupImage = popupOpenImage.querySelector('.popup__image');
 const popupText = popupOpenImage.querySelector('.popup__text');
 
-
 // ФУНКЦИИ
 // Функция добавления карточки
 function createCard(cardData) {
