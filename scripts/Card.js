@@ -1,9 +1,8 @@
-import { openImg } from './utils.js';
-
 export class Card {
-  constructor(data, templateSelector) {
+  constructor(data, templateSelector, handleCardClick) {
     this._templateSelector = templateSelector;
     this._data = data;
+    this._handleCardClick = handleCardClick;
   }
 
   // Возвращаю разметку
@@ -28,29 +27,35 @@ export class Card {
   }
 
   // Метод добавляющий все обработчики
-  _setEventListeners(cardLikeButton, cardDeleteButton) {
+  _setEventListeners() {
 
-    cardLikeButton.addEventListener('click', (evt) => {
+    this._cardLikeButton.addEventListener('click', (evt) => {
       this._handleLikeCard(evt);
     });
 
-    cardDeleteButton.addEventListener('click', (evt) => {
+    this._cardDeleteButton.addEventListener('click', (evt) => {
       this._handleDeleteCard(evt);
+    });
+
+    this._cardImage.addEventListener('click', () => {
+      this._handleCardClick(this._data.name, this._data.link)
     });
   }
 
   // Подготовка карточки к публикации
   generateCard() {
     this._element = this._getTemplate();
-    const cardLikeButton = this._element.querySelector('.element__icon-like');
-    const cardDeleteButton = this._element.querySelector('.element__delete-button');
-    this._setEventListeners(cardLikeButton, cardDeleteButton);
-
-    this._element.querySelector('.element__image').src = this._data.link;
+    this._cardLikeButton = this._element.querySelector('.element__icon-like');
+    this._cardDeleteButton = this._element.querySelector('.element__delete-button');
+    this._cardImage = this._element.querySelector('.element__image');
+    this._setEventListeners();
+    this._cardImage.src = this._data.link;
+    this._cardImage.alt = this._data.name;
     this._element.querySelector('.element__text').textContent = this._data.name;
-    openImg(this._element, this._data);
 
     return this._element;
   }
 }
+
+
 
