@@ -6,7 +6,7 @@ export class PopupWithImage extends Popup {
     this._popupImage = this._popupSelector.querySelector('.popup__image');
     this._popupText = this._popupSelector.querySelector('.popup__text');
   }
-
+  // Вставляет в попап картинку с src изображения и подписью к картинке
   open(name, link) {
     super.open();
     this._popupImage.src = link;
