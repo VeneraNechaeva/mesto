@@ -12,6 +12,10 @@ import { Section } from './Section.js';
 import { Popup } from './Popup.js';
 // Импорт класса PopupWithImage
 import { PopupWithImage } from './PopupWithImage.js';
+// Импорт класса PopupWithForm
+import { PopupWithForm } from './PopupWithForm.js';
+// Импорт класса UserInfo
+import { UserInfo } from './UserInfo.js';
 // Переменные открытия и закрытия попапа редактирования профиля
 // Форма открывается нажатием на кнопку «edit» и закрывается кликом на 'X'
 import { popupEditProfile } from './constants.js';
@@ -77,12 +81,16 @@ import { popupText } from './constants.js';
 //   };
 // };
 
+const userInfo = new UserInfo('.popup__field_text_name', '.popup__field_text_info');
+
 // Создание экземпляров класса Popup
-const popupEditProfileObj = new Popup('.popup_edit');
+const popupEditProfileObj = new PopupWithForm('.popup_edit');
 popupEditProfileObj.setEventListeners();
 
-const popupAddCardObj = new Popup('.popup_add');
-popupAddCardObj.setEventListeners();
+
+
+// const popupAddCardObj = new Popup('.popup_add');
+// popupAddCardObj.setEventListeners();
 
 // const popupOpenImageObj = new Popup('.popup_img');
 // popupOpenImageObj.setEventListeners();
@@ -90,6 +98,10 @@ popupAddCardObj.setEventListeners();
 // Создание экземпляров класса PopupWithImage
 const popupOpenImageObj = new PopupWithImage('.popup_img');
 popupOpenImageObj.setEventListeners();
+
+// Создание экземпляров класса PopupWithForm
+const popupAddCardObj = new PopupWithForm('.popup_add', handleFormCardSubmit);
+popupAddCardObj.setEventListeners();
 
 
 // Функция открытия попапа "редактирование профиля"
@@ -143,15 +155,11 @@ function handleCardClick(name, link) {
 
 // Функция закрытия попапа "добавления карточки"
 // И добавление новой карточки после заполнения полей
-function handleFormCardSubmit(evt) {
+export function handleFormCardSubmit(evt) {
   evt.preventDefault();
 
-  const cardData = {
-    name: placeInput.value,
-    link: linkInput.value,
-  }
-
-  popupFormAdd.reset();
+  const cardData = this._getInputValues();
+  //popupFormAdd.reset();
 
   const cardElement = createCard(cardData);
   cardElements.prepend(cardElement);
@@ -175,7 +183,7 @@ profileAddButton.addEventListener('click', function (evt) {
 });
 
 // Сохранение данных, добавление карточки, закрытие попапа (кнопка "Создать")
-popupFormAdd.addEventListener('submit', handleFormCardSubmit);
+//popupFormAdd.addEventListener('submit', handleFormCardSubmit);
 
 
 // Создание экземпляров валидаторов всех форм
