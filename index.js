@@ -1,30 +1,30 @@
 // Импорт класса Card
-import { Card } from './Card.js';
+import { Card } from './scripts/Card.js';
 // Импорт массива объектов
-import { initialCards } from './constants.js';
+import { initialCards } from './scripts/constants.js';
 // Импорт объекта настроек
-import { settingsObject } from './constants.js';
+import { settingsObject } from './scripts/constants.js';
 // Импорт класса FormValidator
-import { FormValidator } from './FormValidator.js';
+import { FormValidator } from './scripts/FormValidator.js';
 // Импорт класса Section
-import { Section } from './Section.js';
+import { Section } from './scripts/Section.js';
 // Импорт класса PopupWithImage
-import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithImage } from './scripts/PopupWithImage.js';
 // Импорт класса PopupWithForm
-import { PopupWithForm } from './PopupWithForm.js';
+import { PopupWithForm } from './scripts/PopupWithForm.js';
 // Импорт класса UserInfo
-import { UserInfo } from './UserInfo.js';
+import { UserInfo } from './scripts/UserInfo.js';
 // Переменные открытия и закрытия попапа редактирования профиля
 // Форма открывается нажатием на кнопку «edit» и закрывается кликом на 'X'
-import { profileEditButton } from './constants.js';
-import { profileName } from './constants.js';
-import { profileInfo } from './constants.js';
-import { popupFormEdit } from './constants.js';
-import { nameInput } from './constants.js';
-import { infoInput } from './constants.js';
-import { cardElements } from './constants.js';
+import { profileEditButton } from './scripts/constants.js';
+import { profileName } from './scripts/constants.js';
+import { profileInfo } from './scripts/constants.js';
+import { popupFormEdit } from './scripts/constants.js';
+import { nameInput } from './scripts/constants.js';
+import { infoInput } from './scripts/constants.js';
+import { cardElements } from './scripts/constants.js';
 // Переменные формы добавления карточек
-import { profileAddButton } from './constants.js';
+import { profileAddButton } from './scripts/constants.js';
 
 
 // Создание экземпляров класса UserInfo
