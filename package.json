@@ -1,0 +1,31 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Сервис, представляющий собой нтерактивную страницу, куда можно добавлять фотографии, удалять их и ставить лайки. Проектная работа по курсу Веб-разработчик от Яндекс Практикум. Входной файл index.html содержится в корневой папке проекта. ## Структура проекта + **blocks** - директория, содержащая блоки со стилями, согласно методологии БЭМ. + **images** - дирректоря с изображениями. + **pages** - диретория, которя содержит файлы страницы. + **scripts** - диретория, которя содержит файлы со скриптами. + **vendor** - директория сторонних библиотек. + **index.html** - основная страница сайта. ## Технологии Используются HTML, JavaScript, CSS, методолия БЭМ с файловой структурой Nested. ## Ссылка на страницу https://veneranechaeva.github.io/mesto/",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5",
+    "autoprefixer": "^10.4.14",
+    "babel-loader": "^9.1.2",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.7.3",
+    "cssnano": "^6.0.1",
+    "html-webpack-plugin": "^5.5.1",
+    "mini-css-extract-plugin": "^2.7.5",
+    "postcss-loader": "^7.3.0",
+    "webpack": "^5.82.0",
+    "webpack-cli": "^5.0.2",
+    "webpack-dev-server": "^4.13.3"
+  },
+  "dependencies": {
+    "core-js": "^3.30.1"
+  }
+}
