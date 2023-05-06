@@ -4,7 +4,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./pages/index.css">
   <title>Mesto</title>
 </head>
 
@@ -40,7 +39,7 @@
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__form" name="new-place" novalidate>
           <div class="popup__label">
-            <input id="place" class="popup__field popup__field_text_name-place" type="text" name="place"
+            <input id="place" class="popup__field popup__field_text_name-place" type="text" name="name"
               placeholder="Название" minlength="2" maxlength="30" required>
             <span class="popup__error place-error"></span>
           </div>
@@ -65,13 +64,13 @@
 
 
     <header class="header page__margin">
-      <img class="header__logo" src="./images/Vector.svg" alt="сервис Mesto">
+      <img class="header__logo" src="<%=require('./images/Vector.svg')%>" alt="сервис Mesto">
     </header>
 
 
     <main class="content">
       <section class="profile page__padding">
-        <img class="profile__avatar" src="./images/image.jpg" alt="Аватар пользователя">
+        <img class="profile__avatar" src="<%=require('./images/image.jpg')%>" alt="Аватар пользователя">
         <div class="profile__info">
           <h1 class="profile__title">Жак-Ив Кусто</h1>
           <p class="profile__subtitle">Исследователь океана</p>
@@ -99,7 +98,6 @@
       <p class="footer__copyright">© 2020 Mesto Russia</p>
     </footer>
   </div>
-  <script type="module" src="./scripts/index.js"></script>
 </body>
 
 </html>
