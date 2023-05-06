@@ -1,3 +1,5 @@
+// Импорт главного файла стилей
+import './pages/index.css';
 // Импорт класса Card
 import { Card } from './scripts/Card.js';
 // Импорт массива объектов
