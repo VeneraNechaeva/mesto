@@ -18,7 +18,6 @@ import { PopupWithForm } from './PopupWithForm.js';
 import { UserInfo } from './UserInfo.js';
 // Переменные открытия и закрытия попапа редактирования профиля
 // Форма открывается нажатием на кнопку «edit» и закрывается кликом на 'X'
-import { popupEditProfile } from './constants.js';
 import { profileEditButton } from './constants.js';
 import { profileName } from './constants.js';
 import { profileInfo } from './constants.js';
@@ -27,27 +26,18 @@ import { nameInput } from './constants.js';
 import { infoInput } from './constants.js';
 import { cardElements } from './constants.js';
 // Переменные формы добавления карточек
-// Форма открывается нажатием на кнопку «+» и закрывается кликом на 'X'
-import { popupAddCard } from './constants.js';
-import { popupFormAdd } from './constants.js';
 import { profileAddButton } from './constants.js';
-import { placeInput } from './constants.js';
-import { linkInput } from './constants.js';
-// Переменные открытия попапа с картинкой
-// Открывается нажатием на картинку и закрывается кликом на крестик:
-import { popupOpenImage } from './constants.js';
-import { popupImage } from './constants.js';
-import { popupText } from './constants.js';
+
 
 // Создание экземпляров класса UserInfo
 const userInfo = new UserInfo('.popup__field_text_name', '.popup__field_text_info');
 
 // Создание экземпляров класса PopupWithForm
-const popupEditProfileObj = new PopupWithForm('.popup_edit', (evt)=> {
-  const {name, info} = popupEditProfileObj._getInputValues();
+const popupEditProfileObj = new PopupWithForm('.popup_edit', (evt) => {
+  const { name, info } = popupEditProfileObj._getInputValues();
   userInfo.setUserInfo(name, info);
 },
-false
+  false
 );
 popupEditProfileObj.setEventListeners();
 
@@ -64,12 +54,58 @@ popupOpenImageObj.setEventListeners();
 const cardList = new Section({
   initialCards,
   renderer: (item) => {
-    const card = new Card(item, '#card');
-    const cardElement = card.generateCard(cardData);
+    const cardElement = createCard(item);
     cardList.addItem(cardElement);
   }
 },
-'.cardElements');
+  '.cardElements');
+
+//Функция добавления карточки
+function createCard(item) {
+  //Создание экземпляра карточки
+  const card = new Card(item, '#card', popupOpenImageObj.open.bind(popupOpenImageObj));
+  // Создание карточки и возвращение наружу
+  const cardElement = card.generateCard();
+  return cardElement;
+}
+
+// Публикация карточек
+initialCards.forEach((item) => {
+  const cardElement = createCard(item);
+  // Добавление в DOM
+  cardElements.append(cardElement);
+});
+
+// Функция закрытия попапа "добавления карточки"
+// И добавление новой карточки после заполнения полей
+export function handleFormCardSubmit(evt) {
+  evt.preventDefault();
+
+  const cardData = this._getInputValues();
+
+  const cardElement = createCard(cardData);
+  cardElements.prepend(cardElement);
+  popupAddCardObj.close(popupAddCardObj);
+}
+
+
+// Создание экземпляров валидаторов всех форм
+const formValidators = {}
+// Включение валидации
+const enableValidation = (settingsObject) => {
+  const formList = Array.from(document.querySelectorAll(settingsObject.formSelector))
+  formList.forEach((formElement) => {
+    const validator = new FormValidator(settingsObject, formElement)
+    // получаем данные из атрибута `name` у формы
+    const formName = formElement.getAttribute('name')
+    // вот тут в объект записываем под именем формы
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
+
+enableValidation(settingsObject);
+
 
 // Слушатель открытия попапа редактирования профиля
 // Открывается по кнопке редактирования
@@ -86,7 +122,6 @@ function openPopupEdit(popup, info) {
   popup.open();
   formValidators['edit-profile'].resetValidation();
 }
-
 
 
 // Функция закрытия попапа "редактирование профиля"
@@ -113,58 +148,7 @@ profileAddButton.addEventListener('click', function (evt) {
 });
 
 
-//Функция добавления карточки
-function createCard(item) {
-  //Создание экземпляра карточки
-  const card = new Card(item, '#card', handleCardClick);
-  // Создание карточки и возвращение наружу
-  const cardElement = card.generateCard();
-  return cardElement;
-}
 
-// Публикация карточек
-initialCards.forEach((item) => {
-  const cardElement = createCard(item);
-  // Добавление в DOM
-  cardElements.append(cardElement);
-});
-
-
-// Функция открытия попапа с картинкой
-function handleCardClick(name, link) {
-  popupOpenImageObj.open(name, link);
-}
-
-// Функция закрытия попапа "добавления карточки"
-// И добавление новой карточки после заполнения полей
-export function handleFormCardSubmit(evt) {
-  evt.preventDefault();
-
-  const cardData = this._getInputValues();
-
-  const cardElement = createCard(cardData);
-  cardElements.prepend(cardElement);
-  popupAddCardObj.close(popupAddCardObj);
-}
-
-
-// Создание экземпляров валидаторов всех форм
-const formValidators = {}
-// Включение валидации
-const enableValidation = (settingsObject) => {
-  const formList = Array.from(document.querySelectorAll(settingsObject.formSelector))
-  formList.forEach((formElement) => {
-    const validator = new FormValidator(settingsObject, formElement)
-    // получаем данные из атрибута `name` у формы
-    const formName = formElement.getAttribute('name')
-
-    // вот тут в объект записываем под именем формы
-    formValidators[formName] = validator;
-    validator.enableValidation();
-  });
-};
-
-enableValidation(settingsObject);
 
 
 
