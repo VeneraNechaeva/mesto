@@ -39,80 +39,55 @@ import { popupOpenImage } from './constants.js';
 import { popupImage } from './constants.js';
 import { popupText } from './constants.js';
 
-
-// ФУНКЦИИ
-// // Функция открытия попапа (общая)
-// export function openPopup(popup) {
-//   popup.classList.add('popup_opened');
-//   document.addEventListener('keydown', closePopupByEsc);
-// }
-
-// // Функция закрытия попапа (общая)
-// function closePopup(popup) {
-//   popup.classList.remove('popup_opened');
-//   document.removeEventListener('keydown', closePopupByEsc);
-// }
-
-// Функция закрытия попапов кликом на оверлей или на "х"
-// const closePopupByOverlay = () => {
-//   const popupList = Array.from(document.querySelectorAll('.popup'));
-//   popupList.forEach(popup => {
-//     popup.addEventListener('mousedown', (evt) => {
-//       if (evt.target.classList.contains('popup_opened')) {
-//         closePopup(popup)
-//       }
-//       if (evt.target.classList.contains('popup__close-icon')) {
-//         closePopup(popup)
-//       }
-//     });
-//   });
-// };
-
-// closePopupByOverlay();
-
-
-// // Функция закрытия попапа нажатием на Esc
-// function closePopupByEsc(evt) {
-//   if (evt.key === 'Escape') {
-//     const activePopup = document.querySelector('.popup_opened');
-//     if (activePopup !== null) {
-//       closePopup(activePopup)
-//     };
-//   };
-// };
-
+// Создание экземпляров класса UserInfo
 const userInfo = new UserInfo('.popup__field_text_name', '.popup__field_text_info');
 
-// Создание экземпляров класса Popup
-const popupEditProfileObj = new PopupWithForm('.popup_edit');
+// Создание экземпляров класса PopupWithForm
+const popupEditProfileObj = new PopupWithForm('.popup_edit', (evt)=> {
+  const {name, info} = popupEditProfileObj._getInputValues();
+  userInfo.setUserInfo(name, info);
+},
+false
+);
 popupEditProfileObj.setEventListeners();
 
-
-
-// const popupAddCardObj = new Popup('.popup_add');
-// popupAddCardObj.setEventListeners();
-
-// const popupOpenImageObj = new Popup('.popup_img');
-// popupOpenImageObj.setEventListeners();
+const popupAddCardObj = new PopupWithForm('.popup_add', handleFormCardSubmit, true);
+popupAddCardObj.setEventListeners();
 
 // Создание экземпляров класса PopupWithImage
 const popupOpenImageObj = new PopupWithImage('.popup_img');
 popupOpenImageObj.setEventListeners();
 
-// Создание экземпляров класса PopupWithForm
-const popupAddCardObj = new PopupWithForm('.popup_add', handleFormCardSubmit);
-popupAddCardObj.setEventListeners();
 
+// Отрисовка каждого отдельного элемента
+// Функция renderer
+const cardList = new Section({
+  initialCards,
+  renderer: (item) => {
+    const card = new Card(item, '#card');
+    const cardElement = card.generateCard(cardData);
+    cardList.addItem(cardElement);
+  }
+},
+'.cardElements');
+
+// Слушатель открытия попапа редактирования профиля
+// Открывается по кнопке редактирования
+profileEditButton.addEventListener('click', function (evt) {
+  openPopupEdit(popupEditProfileObj, userInfo);
+});
 
 // Функция открытия попапа "редактирование профиля"
 // Заполнение полей при каждом открытии
-function openPopupEdit(popup) {
-  nameInput.value = profileName.textContent;
-  infoInput.value = profileInfo.textContent;
-  //openPopup(popup);
+function openPopupEdit(popup, info) {
+  const data = info.getUserInfo();
+  nameInput.value = data.name;
+  infoInput.value = data.info;
   popup.open();
   formValidators['edit-profile'].resetValidation();
 }
+
+
 
 // Функция закрытия попапа "редактирование профиля"
 // и сохранения имени и информации о себе
@@ -123,10 +98,20 @@ function submitEditProfileForm(evt) {
   popupEditProfileObj.close(popupEditProfileObj);
 }
 
+// Сохранииение данных и закрытие попапа (кнопка "Сохранить")
+popupFormEdit.addEventListener('submit', submitEditProfileForm);
+
+
 // Функция открытия попапа "добавление карточки"
 function openPopupAdd(popup) {
   popup.open(popup);
 }
+
+// Открытие и закрытие попапа "добавление карточки"
+profileAddButton.addEventListener('click', function (evt) {
+  openPopupAdd(popupAddCardObj);
+});
+
 
 //Функция добавления карточки
 function createCard(item) {
@@ -147,9 +132,6 @@ initialCards.forEach((item) => {
 
 // Функция открытия попапа с картинкой
 function handleCardClick(name, link) {
-  // popupImage.src = link;
-  // popupImage.alt = name;
-  // popupText.textContent = name;
   popupOpenImageObj.open(name, link);
 }
 
@@ -159,31 +141,11 @@ export function handleFormCardSubmit(evt) {
   evt.preventDefault();
 
   const cardData = this._getInputValues();
-  //popupFormAdd.reset();
 
   const cardElement = createCard(cardData);
   cardElements.prepend(cardElement);
   popupAddCardObj.close(popupAddCardObj);
 }
-
-// УСТАНОВКА СЛУШАТЕЛЕЙ
-// Открытие попапа редактирования профиля
-// Открывается по кнопке редактирования
-profileEditButton.addEventListener('click', function (evt) {
-  openPopupEdit(popupEditProfileObj);
-});
-
-// Сохранииение данных и закрытие попапа (кнопка "Сохранить")
-popupFormEdit.addEventListener('submit', submitEditProfileForm);
-
-
-// Открытие и закрытие попапа "добавление карточки"
-profileAddButton.addEventListener('click', function (evt) {
-  openPopupAdd(popupAddCardObj);
-});
-
-// Сохранение данных, добавление карточки, закрытие попапа (кнопка "Создать")
-//popupFormAdd.addEventListener('submit', handleFormCardSubmit);
 
 
 // Создание экземпляров валидаторов всех форм
@@ -204,18 +166,6 @@ const enableValidation = (settingsObject) => {
 
 enableValidation(settingsObject);
 
-
-// Отрисовка каждого отдельного элемента
-// Функция renderer
-const cardList = new Section({
-  initialCards,
-  renderer: (item) => {
-    const card = new Card(item, '#card');
-    const cardElement = card.generateCard(cardData);
-    cardList.addItem(cardElement);
-  }
-},
-'.cardElements');
 
 
 

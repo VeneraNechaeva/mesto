@@ -1,5 +1,5 @@
 export class UserInfo {
-  constructor({ nameSelector, infoSelector }) {
+  constructor(nameSelector, infoSelector) {
     this._nameSelector = document.querySelector(nameSelector);
     this._infoSelector = document.querySelector(infoSelector);
   }
@@ -7,8 +7,8 @@ export class UserInfo {
   // Возвращает объект с данными пользователя
   getUserInfo() {
     return {
-      nameInput: this._nameSelector.textContent,
-      infoInput: this._infoSelector.textContent,
+      name: this._nameSelector.textContent,
+      info: this._infoSelector.textContent,
     }
   }
 

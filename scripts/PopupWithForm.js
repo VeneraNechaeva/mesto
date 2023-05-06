@@ -1,21 +1,20 @@
 import { Popup } from './Popup.js';
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, handleFormCardSubmit) {
+  constructor(popupSelector, handleFormCardSubmit, resetFormOnClose) {
     super(popupSelector);
+    this._resetFormOnClose = resetFormOnClose;
     this._handleFormCardSubmit = handleFormCardSubmit.bind(this);
-    this._placeInput = this._popupSelector.querySelector('.popup__field_text_name-place');
-    this._linkInput = this._popupSelector.querySelector('.popup__field_text_link');
-    this._popupFormAdd = document.forms['new-place'];
-    //this._profileAddButton = document.querySelector('.profile__add-button');
+    this._form = this._popupSelector.querySelector('form');
   }
 
   // Собирает данные всех полей формы
   _getInputValues() {
-    return {
-      name: this._placeInput.value,
-      link: this._linkInput.value,
-    }
+    const inputs = {}
+    Array.from(this._form.querySelectorAll('input')).forEach(element => {
+      inputs[element.name] = element.value;
+    });
+    return inputs;
   }
 
   setEventListeners() {
@@ -23,8 +22,11 @@ export class PopupWithForm extends Popup {
     this._popupSelector.addEventListener('submit', this._handleFormCardSubmit);
   }
 
+  // Сбрасывается форма
   close() {
     super.close();
-    this._popupFormAdd.reset();
+    if (this._resetFormOnClose) {
+      this._form.reset();
+    }
   }
 }
