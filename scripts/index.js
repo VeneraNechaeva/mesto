@@ -8,8 +8,6 @@ import { settingsObject } from './constants.js';
 import { FormValidator } from './FormValidator.js';
 // Импорт класса Section
 import { Section } from './Section.js';
-// Импорт класса Popup
-import { Popup } from './Popup.js';
 // Импорт класса PopupWithImage
 import { PopupWithImage } from './PopupWithImage.js';
 // Импорт класса PopupWithForm
