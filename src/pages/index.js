@@ -24,7 +24,6 @@ import { infoInput } from '../scripts/utils/constants.js';
 // Переменные формы добавления карточек
 import { profileAddButton } from '../scripts/utils/constants.js';
 
-
 // Создание экземпляров класса UserInfo
 const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
 
