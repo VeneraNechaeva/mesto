@@ -1,28 +1,28 @@
 // Импорт главного файла стилей
-import './pages/index.css';
+import './index.css';
 // Импорт класса Card
-import { Card } from './scripts/Card.js';
+import { Card } from '../scripts/components/Card.js';
 // Импорт массива объектов
-import { initialCards } from './scripts/constants.js';
+import { initialCards } from '../scripts/utils/constants.js';
 // Импорт объекта настроек
-import { settingsObject } from './scripts/constants.js';
+import { settingsObject } from '../scripts/utils/constants.js';
 // Импорт класса FormValidator
-import { FormValidator } from './scripts/FormValidator.js';
+import { FormValidator } from '../scripts/components/FormValidator.js';
 // Импорт класса Section
-import { Section } from './scripts/Section.js';
+import { Section } from '../scripts/components/Section.js';
 // Импорт класса PopupWithImage
-import { PopupWithImage } from './scripts/PopupWithImage.js';
+import { PopupWithImage } from '../scripts/components/PopupWithImage.js';
 // Импорт класса PopupWithForm
-import { PopupWithForm } from './scripts/PopupWithForm.js';
+import { PopupWithForm } from '../scripts/components/PopupWithForm.js';
 // Импорт класса UserInfo
-import { UserInfo } from './scripts/UserInfo.js';
+import { UserInfo } from '../scripts/components/UserInfo.js';
 // Переменные открытия и закрытия попапа редактирования профиля
 // Форма открывается нажатием на кнопку «edit» и закрывается кликом на 'X'
-import { profileEditButton } from './scripts/constants.js';
-import { nameInput } from './scripts/constants.js';
-import { infoInput } from './scripts/constants.js';
+import { profileEditButton } from '../scripts/utils/constants.js';
+import { nameInput } from '../scripts/utils/constants.js';
+import { infoInput } from '../scripts/utils/constants.js';
 // Переменные формы добавления карточек
-import { profileAddButton } from './scripts/constants.js';
+import { profileAddButton } from '../scripts/utils/constants.js';
 
 
 // Создание экземпляров класса UserInfo
