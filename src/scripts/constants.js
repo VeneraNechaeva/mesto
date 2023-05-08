@@ -40,15 +40,9 @@ export const settingsObject = {
 // Форма открывается нажатием на кнопку «edit» и закрывается кликом на крестик
 export const profile = document.querySelector('.profile');
 export const profileEditButton = profile.querySelector('.profile__edit-button');
-
-export const profileName = profile.querySelector('.profile__title');
-export const profileInfo = profile.querySelector('.profile__subtitle');
-
 export const popupFormEdit = document.forms['edit-profile'];
-
 export const nameInput = popupFormEdit.querySelector('.popup__field_text_name');
 export const infoInput = popupFormEdit.querySelector('.popup__field_text_info');
-
 export const cardElements = document.querySelector('.elements');
 // Переменные формы добавления карточек
 // Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик
