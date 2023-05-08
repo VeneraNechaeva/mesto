@@ -26,7 +26,6 @@ import { profileAddButton } from '../scripts/utils/constants.js';
 
 
 // Создание экземпляров класса UserInfo
-const userInfoPopup = new UserInfo('.popup__field_text_name', '.popup__field_text_info');
 const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
 
 // Создание экземпляров класса PopupWithForm
