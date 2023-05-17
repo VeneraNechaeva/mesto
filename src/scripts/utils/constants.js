@@ -48,4 +48,4 @@ export const cardElements = document.querySelector('.elements');
 // Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик
 export const profileAddButton = profile.querySelector('.profile__add-button');
 // Переменные формы "Обновить аватар"
-export const profileAvatarButton = document.querySelector('.');
+// export const profileAvatarButton = document.querySelector('.');

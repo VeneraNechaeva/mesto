@@ -129,9 +129,9 @@ profileAddButton.addEventListener('click', function (evt) {
 
 
 // Функция открытия попапа "Обновить аватар"
-function openPopupAvatar(popup) {
-  popup.open(popup);
-}
+// function openPopupAvatar(popup) {
+//   popup.open(popup);
+// }
 
 
 
