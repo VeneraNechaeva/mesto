@@ -47,3 +47,5 @@ export const cardElements = document.querySelector('.elements');
 // Переменные формы добавления карточек
 // Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик
 export const profileAddButton = profile.querySelector('.profile__add-button');
+// Переменные формы "Обновить аватар"
+export const profileAvatarButton = document.querySelector('.');
