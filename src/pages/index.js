@@ -118,13 +118,20 @@ function openPopupAdd(popup) {
   popup.open(popup);
 }
 
-// Открытие и закрытие попапа "добавление карточки"
+// Слушатель открытия попапа "добавление карточки"
 profileAddButton.addEventListener('click', function (evt) {
   openPopupAdd(popupAddCard);
 });
 
 
 
+// Слушатель открытия попапа "Обновить аватар"
+
+
+// Функция открытия попапа "Обновить аватар"
+function openPopupAvatar(popup) {
+  popup.open(popup);
+}
 
 
 
