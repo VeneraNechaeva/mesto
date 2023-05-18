@@ -49,6 +49,5 @@ export const cardElements = document.querySelector('.elements');
 export const profileAddButton = profile.querySelector('.profile__add-button');
 // // Переменные попапа "Обновить аватар"
 export const AvatarButton = document.querySelector('.profile__avatar-button');
-// export const popupAvatar = document.querySelector('.popup_avatar');
 export const AvatarImg = document.querySelector('.profile__avatar');
 // Переменные попапа "Удалить карточку"
