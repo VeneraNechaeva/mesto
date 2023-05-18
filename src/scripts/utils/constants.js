@@ -47,5 +47,8 @@ export const cardElements = document.querySelector('.elements');
 // Переменные формы добавления карточек
 // Форма открывается нажатием на кнопку «+» и закрывается кликом на крестик
 export const profileAddButton = profile.querySelector('.profile__add-button');
-// Переменные формы "Обновить аватар"
-// export const profileAvatarButton = document.querySelector('.');
+// // Переменные попапа "Обновить аватар"
+export const AvatarButton = document.querySelector('.profile__avatar-button');
+// export const popupAvatar = document.querySelector('.popup_avatar');
+export const AvatarImg = document.querySelector('.profile__avatar');
+// Переменные попапа "Удалить карточку"

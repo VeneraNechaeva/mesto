@@ -23,11 +23,15 @@ import { nameInput } from '../scripts/utils/constants.js';
 import { infoInput } from '../scripts/utils/constants.js';
 // Переменные формы добавления карточек
 import { profileAddButton } from '../scripts/utils/constants.js';
+// Переменные попапа "Обновить аватар"
+import { AvatarButton } from '../scripts/utils/constants.js';
+// import { popupAvatar } from '../scripts/utils/constants.js';
+import { AvatarImg } from '../scripts/utils/constants.js';
 
 // Создание экземпляров класса UserInfo
 const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
 
-// Создание экземпляров класса PopupWithForm
+// Создание экземпляров класса PopupWithForm для попапа "Редактирования профиля"
 const popupEditProfile = new PopupWithForm('.popup_edit', (evt, data) => {
   const { name, info } = data;
   userInfoProfile.setUserInfo(name, info);
@@ -37,12 +41,17 @@ const popupEditProfile = new PopupWithForm('.popup_edit', (evt, data) => {
 );
 popupEditProfile.setEventListeners();
 
+// Создание экземпляров класса PopupWithForm для попапа "Добавления карточки"
 const popupAddCard = new PopupWithForm('.popup_add', handleFormCardSubmit, true);
 popupAddCard.setEventListeners();
 
 // Создание экземпляров класса PopupWithImage
 const popupOpenImage = new PopupWithImage('.popup_img');
 popupOpenImage.setEventListeners();
+
+// Создание экземпляров класса PopupWithForm для попапа "Обновить аватар"
+const popupAvatar = new PopupWithForm('.popup_avatar', handleFormCardSubmit, true);
+popupAvatar.setEventListeners();
 
 
 // Публикация карточек
@@ -126,12 +135,14 @@ profileAddButton.addEventListener('click', function (evt) {
 
 
 // Слушатель открытия попапа "Обновить аватар"
-
+AvatarButton.addEventListener('click', function (evt) {
+  openPopupAvatar(popupAvatar);
+});
 
 // Функция открытия попапа "Обновить аватар"
-// function openPopupAvatar(popup) {
-//   popup.open(popup);
-// }
+function openPopupAvatar(popup) {
+  popup.open(popup);
+}
 
 
 
