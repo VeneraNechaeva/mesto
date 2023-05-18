@@ -25,7 +25,6 @@ import { infoInput } from '../scripts/utils/constants.js';
 import { profileAddButton } from '../scripts/utils/constants.js';
 // Переменные попапа "Обновить аватар"
 import { AvatarButton } from '../scripts/utils/constants.js';
-// import { popupAvatar } from '../scripts/utils/constants.js';
 import { AvatarImg } from '../scripts/utils/constants.js';
 
 // Создание экземпляров класса UserInfo
@@ -50,7 +49,7 @@ const popupOpenImage = new PopupWithImage('.popup_img');
 popupOpenImage.setEventListeners();
 
 // Создание экземпляров класса PopupWithForm для попапа "Обновить аватар"
-const popupAvatar = new PopupWithForm('.popup_avatar', handleFormCardSubmit, true);
+const popupAvatar = new PopupWithForm('.popup_avatar', handleFormAvatarSubmit, true);
 popupAvatar.setEventListeners();
 
 
@@ -122,6 +121,7 @@ function openPopupEdit(popup, info) {
   formValidators['edit-profile'].resetValidation();
 }
 
+
 // Функция открытия попапа "добавление карточки"
 function openPopupAdd(popup) {
   popup.open(popup);
@@ -133,6 +133,14 @@ profileAddButton.addEventListener('click', function (evt) {
 });
 
 
+// Функция закрытия попапа "Обновить аватар"
+// И добновление нового изображения на аватарку после заполнения полей
+export function handleFormAvatarSubmit(evt, data) {
+  evt.preventDefault();
+
+  AvatarImg.src = data.avatar;
+  popupAvatar.close(popupAvatar);
+}
 
 // Слушатель открытия попапа "Обновить аватар"
 AvatarButton.addEventListener('click', function (evt) {
