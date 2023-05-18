@@ -10,6 +10,8 @@ import { settingsObject } from '../scripts/utils/constants.js';
 import { FormValidator } from '../scripts/components/FormValidator.js';
 // Импорт класса Section
 import { Section } from '../scripts/components/Section.js';
+// Импорт класса Api
+import { Api } from '../scripts/components/Section.js';
 // Импорт класса PopupWithImage
 import { PopupWithImage } from '../scripts/components/PopupWithImage.js';
 // Импорт класса PopupWithForm
@@ -26,6 +28,25 @@ import { profileAddButton } from '../scripts/utils/constants.js';
 // Переменные попапа "Обновить аватар"
 import { AvatarButton } from '../scripts/utils/constants.js';
 import { AvatarImg } from '../scripts/utils/constants.js';
+
+
+// Создание экземпляров класса Api
+// const api = new Api({
+//   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
+//   headers: {
+//     authorization: 'e9c671c4-c4d8-4942-9020-977fdfc1a3d7',
+//     'Content-Type': 'application/json'
+//   }
+// });
+
+// .catch((err) => {
+//   console.log(err); // выведем ошибку в консоль
+// });
+
+// .then((data) => {
+//   console.log(data);
+// });
+
 
 // Создание экземпляров класса UserInfo
 const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
