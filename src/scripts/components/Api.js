@@ -33,10 +33,14 @@ export class Api {
    }
 
   // Сохранить информацию о пользователе на сервере
-  savetUserInformation() {
+  savetUserInformation(name, about) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {...this._headers, ...{'Content-Type': 'application/json'}}
+      headers: {...this._headers, ...{'Content-Type': 'application/json'}},
+      body: JSON.stringify({
+        name: name,
+        about: about
+      })
     })
       .then((res) => {
         if (res.ok) {
@@ -50,7 +54,7 @@ export class Api {
   addNewCard(name, link) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: this._headers, // 'Content-Type': 'application/json'
+      headers: {...this._headers, ...{'Content-Type': 'application/json'}},
       body: JSON.stringify({
         name: name,
         link: link
@@ -70,7 +74,7 @@ export class Api {
 
   // Удаление карточки
   deletСard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {  //!!!!!!!!!!!!!!!!!!!
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -84,8 +88,8 @@ export class Api {
 
   // Постановка и снятие лайка
   // Постановка лайка
-  stagingLike() {
-    return fetch(`${this._baseUrl}/cards/cardId/likes`, { // TODO
+  setLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
     method: 'PUT',
     headers: this._headers
   })
@@ -97,8 +101,8 @@ export class Api {
     })
   }
   // Снятие лайка
-  deletLike() {
-    return fetch(`${this._baseUrl}/cards/cardId/likes`, { //!!!!!!!!!!!!!!!
+  deletLike(cardId) {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers
     })
@@ -111,10 +115,13 @@ export class Api {
   }
 
   // Обновление аватара пользователя
-  changeАvatar() {
+  changeАvatar(avatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this._headers
+      headers: {...this._headers, ...{'Content-Type': 'application/json'}},
+      body: JSON.stringify({
+        avatar: avatar,
+      })
     })
       .then((res) => {
         if (res.ok) {

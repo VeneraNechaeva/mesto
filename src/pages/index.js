@@ -3,7 +3,7 @@ import './index.css';
 // Импорт класса Card
 import { Card } from '../scripts/components/Card.js';
 // Импорт массива объектов
-import { initialCards } from '../scripts/utils/constants.js';
+// import { initialCards } from '../scripts/utils/constants.js';
 // Импорт объекта настроек
 import { settingsObject } from '../scripts/utils/constants.js';
 // Импорт класса FormValidator
@@ -11,11 +11,13 @@ import { FormValidator } from '../scripts/components/FormValidator.js';
 // Импорт класса Section
 import { Section } from '../scripts/components/Section.js';
 // Импорт класса Api
-import { Api } from '../scripts/components/Section.js';
+import { Api } from '../scripts/components/Api.js';
 // Импорт класса PopupWithImage
 import { PopupWithImage } from '../scripts/components/PopupWithImage.js';
 // Импорт класса PopupWithForm
 import { PopupWithForm } from '../scripts/components/PopupWithForm.js';
+// Импорт класса PopupWithConfirmation
+import { PopupWithConfirmation } from '../scripts/components/PopupWithConfirmation.js';
 // Импорт класса UserInfo
 import { UserInfo } from '../scripts/components/UserInfo.js';
 // Переменные открытия и закрытия попапа редактирования профиля
@@ -26,18 +28,19 @@ import { infoInput } from '../scripts/utils/constants.js';
 // Переменные формы добавления карточек
 import { profileAddButton } from '../scripts/utils/constants.js';
 // Переменные попапа "Обновить аватар"
-import { AvatarButton } from '../scripts/utils/constants.js';
-import { AvatarImg } from '../scripts/utils/constants.js';
+import { avatarButton } from '../scripts/utils/constants.js';
+import { avatarImg } from '../scripts/utils/constants.js';
+import { deleteCardButton } from '../scripts/utils/constants.js';
 
 
 // Создание экземпляров класса Api
-// const api = new Api({
-//   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
-//   headers: {
-//     authorization: 'e9c671c4-c4d8-4942-9020-977fdfc1a3d7',
-//     'Content-Type': 'application/json'
-//   }
-// });
+const api = new Api({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-66',
+  headers: {
+    authorization: 'e9c671c4-c4d8-4942-9020-977fdfc1a3d7',
+    'Content-Type': 'application/json'
+  }
+});
 
 // .catch((err) => {
 //   console.log(err); // выведем ошибку в консоль
@@ -47,14 +50,49 @@ import { AvatarImg } from '../scripts/utils/constants.js';
 //   console.log(data);
 // });
 
-
 // Создание экземпляров класса UserInfo
 const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
+
+
+let cardList;
+api.getUserInformation().then((userData) => {
+  userInfoProfile.setUserInfo(userData.name, userData.about)
+
+  // Публикация карточек
+  // Отрисовка каждого отдельного элемента
+  // Функция renderer
+  api.getInitialCards()
+    .then((data) => {
+      cardList = new Section({
+        items: data,
+        renderer: (item) => {
+          const cardElement = createCard(item, userData._id);
+          cardList.addItem(cardElement);
+        }
+      },
+        '.elements');
+      cardList.renderItems();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
+})
+  .catch((err) => {
+    console.log(err); // выведем ошибку в консоль
+  });
+
 
 // Создание экземпляров класса PopupWithForm для попапа "Редактирования профиля"
 const popupEditProfile = new PopupWithForm('.popup_edit', (evt, data) => {
   const { name, info } = data;
-  userInfoProfile.setUserInfo(name, info);
+  api.savetUserInformation(name, info)
+    .then((data) => {
+      userInfoProfile.setUserInfo(name, info);
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
+
   popupEditProfile.close();
 },
   false
@@ -73,24 +111,30 @@ popupOpenImage.setEventListeners();
 const popupAvatar = new PopupWithForm('.popup_avatar', handleFormAvatarSubmit, true);
 popupAvatar.setEventListeners();
 
+// Создание экземпляров класса PopupWithConfirmation для попапа "Удалить карточку"
+const popupConfirm = new PopupWithConfirmation('.popup_confirm', handleFormConfirmSubmit, true);
+popupConfirm.setEventListeners();
 
-// Публикация карточек
-// Отрисовка каждого отдельного элемента
-// Функция renderer
-const cardList = new Section({
-  items: initialCards,
-  renderer: (item) => {
-    const cardElement = createCard(item);
-    cardList.addItem(cardElement);
-  }
-},
-  '.elements');
-cardList.renderItems();
+// Функция закрытия попапа "Удаление карточки"
+function handleFormConfirmSubmit(evt, card) {
+  evt.preventDefault();
+
+  api.deletСard(card.getData()._id)
+    .then((data) => {
+      popupConfirm.close();
+      card.deleteCard();
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
+}
 
 //Функция добавления карточки
-function createCard(item) {
+function createCard(item, userId) {
   //Создание экземпляра карточки
-  const card = new Card(item, '#card', popupOpenImage.open.bind(popupOpenImage));
+  const card = new Card(item, '#card', popupOpenImage.open.bind(popupOpenImage),
+    popupConfirm.open.bind(popupConfirm), api, userId,
+  );
   // Создание карточки и возвращение наружу
   const cardElement = card.generateCard();
   return cardElement;
@@ -102,9 +146,15 @@ function createCard(item) {
 export function handleFormCardSubmit(evt, data) {
   evt.preventDefault();
 
-  const cardElement = createCard(data);
-  cardList.addItem(cardElement);
-  popupAddCard.close(popupAddCard);
+  api.addNewCard(data.name, data.link)
+    .then((data) => {
+      const cardElement = createCard(data);
+      cardList.addItem(cardElement);
+      popupAddCard.close(popupAddCard);
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    });
 }
 
 
@@ -153,18 +203,17 @@ profileAddButton.addEventListener('click', function (evt) {
   openPopupAdd(popupAddCard);
 });
 
-
 // Функция закрытия попапа "Обновить аватар"
 // И добновление нового изображения на аватарку после заполнения полей
 export function handleFormAvatarSubmit(evt, data) {
   evt.preventDefault();
 
-  AvatarImg.src = data.avatar;
+  avatarImg.src = data.avatar;
   popupAvatar.close(popupAvatar);
 }
 
 // Слушатель открытия попапа "Обновить аватар"
-AvatarButton.addEventListener('click', function (evt) {
+avatarButton.addEventListener('click', function (evt) {
   openPopupAvatar(popupAvatar);
 });
 
@@ -173,9 +222,30 @@ function openPopupAvatar(popup) {
   popup.open(popup);
 }
 
+///////////////////////////////////////////////////////////////////////////////////
 
 
 
+// // Слушатель открытия попапа "Удаление карточки"
+// deleteCardButton.addEventListener('click', function (evt) {
+//   openPopupConfirmDeletCard(popupConfirm);
+// });
 
 
 
+// // Функция открытия попапа "Удаление карточки"
+// function openPopupConfirmDeletCard(popup) {
+//   popup.open(popup);
+// }
+
+
+////////////////////////////////////////////////////////////////////////////
+// function renderLoading(isLoading) {
+//   if (isLoading) {
+//     spinner.classList.add('spinner_visible');
+//     content.classList.add('content_hidden');
+//   } else {
+//     spinner.classList.remove('spinner_visible');
+//     content.classList.remove('content_hidden');
+//   }
+// }
