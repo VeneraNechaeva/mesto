@@ -6,6 +6,7 @@ export class Card {
     this._handleFormConfirmSubmit = handleFormConfirmSubmit;
     this._api = api;
     this._liked = data.likes.find((el) => el._id === userId) !== undefined;
+    this._isMy = data.id === userId;
   }
 
   getData() {
@@ -87,6 +88,10 @@ export class Card {
 
     if (this._liked) {
       this._cardLikeButton.classList.add('element__icon-like_active');
+    }
+
+    if (!this._isMy) {
+      this._cardDeleteButton.remove();
     }
 
     return this._element;
