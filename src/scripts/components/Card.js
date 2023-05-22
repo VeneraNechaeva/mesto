@@ -51,6 +51,7 @@ export class Card {
   // Метод обработки событий (Удаление карточки)
   deleteCard() {
     this._element.remove();
+    this._element === null;
   }
 
   // Метод добавляющий все обработчики
