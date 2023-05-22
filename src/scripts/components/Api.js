@@ -57,7 +57,7 @@ export class Api {
   }
 
   // Удаление карточки
-  deletСard(cardId) {
+  deletCard(cardId) {
     return this._sendRequest(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
@@ -81,7 +81,7 @@ export class Api {
   }
 
   // Обновление аватара пользователя
-  changeАvatar(avatar) {
+  changeAvatar(avatar) {
     return this._sendRequest(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: { ...this._headers, ...{ 'Content-Type': 'application/json' } },

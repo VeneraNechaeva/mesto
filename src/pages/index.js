@@ -29,7 +29,6 @@ import { infoInput } from '../scripts/utils/constants.js';
 import { profileAddButton } from '../scripts/utils/constants.js';
 // Переменные попапа "Обновить аватар"
 import { avatarButton } from '../scripts/utils/constants.js';
-import { avatarImg } from '../scripts/utils/constants.js';
 
 
 // Создание экземпляров класса Api
@@ -42,19 +41,19 @@ const api = new Api({
 });
 
 // Создание экземпляров класса UserInfo
-const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
+const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle', '.profile__avatar');
 
 let cardList;
 api.getUserInformation().then((userData) => {
-  userInfoProfile.setUserInfo(userData.name, userData.about)
-  avatarImg.src = userData.avatar;
+  userInfoProfile.setUserInfo(userData.name, userData.about);
+  userInfoProfile.setUserAvatar(userData.avatar);
   // Публикация карточек
   // Отрисовка каждого отдельного элемента
   // Функция renderer
   api.getInitialCards()
     .then((data) => {
       cardList = new Section({
-        items: data,
+        items: data.reverse(),
         renderer: (item) => {
           const cardElement = createCard(item, userData._id);
           cardList.addItem(cardElement);
@@ -81,13 +80,13 @@ const popupEditProfile = new PopupWithForm('.popup_edit', (evt, data, button) =>
   api.savetUserInformation(name, info)
     .then((data) => {
       userInfoProfile.setUserInfo(name, info);
+      popupEditProfile.close();
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
     })
     .finally(() => {
       renderLoading(button, 'Сохранить');
-      popupEditProfile.close();
     });
 },
   false
@@ -116,7 +115,7 @@ popupConfirm.setEventListeners();
 function handleFormConfirmSubmit(evt, card) {
   evt.preventDefault();
 
-  api.deletСard(card.getData()._id)
+  api.deletCard(card.getData()._id)
     .then((data) => {
       popupConfirm.close();
       card.deleteCard();
@@ -185,17 +184,17 @@ profileEditButton.addEventListener('click', function (evt) {
 
 // Функция открытия попапа "редактирование профиля"
 // Заполнение полей при каждом открытии
-function openPopupEdit(popup, info) {
-  const data = info.getUserInfo();
+function openPopupEdit() {
+  const data = userInfoProfile.getUserInfo();
   nameInput.value = data.name;
   infoInput.value = data.info;
-  popup.open();
+  popupEditProfile.open();
   formValidators['edit-profile'].resetValidation();
 }
 
 // Функция открытия попапа "добавление карточки"
-function openPopupAdd(popup) {
-  popup.open(popup);
+function openPopupAdd() {
+  popupAddCard.open();
 }
 
 // Слушатель открытия попапа "добавление карточки"
@@ -214,9 +213,9 @@ export function handleFormAvatarSubmit(evt, data, button) {
   evt.preventDefault();
 
   renderLoading(button, 'Сохранение...');
-  api.changeАvatar(data.avatar)
+  api.changeAvatar(data.avatar)
     .then((data) => {
-      avatarImg.src = data.avatar;
+      userInfoProfile.setUserAvatar(data.avatar);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
@@ -233,8 +232,8 @@ avatarButton.addEventListener('click', function (evt) {
 });
 
 // Функция открытия попапа "Обновить аватар"
-function openPopupAvatar(popup) {
-  popup.open(popup);
+function openPopupAvatar() {
+  popupAvatar.open();
 }
 
 

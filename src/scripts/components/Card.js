@@ -6,7 +6,7 @@ export class Card {
     this._handleFormConfirmSubmit = handleFormConfirmSubmit;
     this._api = api;
     this._liked = data.likes.find((el) => el._id === userId) !== undefined;
-    this._isMy = data.owner._id === userId;
+    this._isMy = data.owner._id === userId || userId === undefined;
   }
 
   getData() {
@@ -51,6 +51,7 @@ export class Card {
   // Метод обработки событий (Удаление карточки)
   deleteCard() {
     this._element.remove();
+    this._element === null;
   }
 
   // Метод добавляющий все обработчики

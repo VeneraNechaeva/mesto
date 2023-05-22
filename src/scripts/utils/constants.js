@@ -21,4 +21,4 @@ export const cardElements = document.querySelector('.elements');
 export const profileAddButton = profile.querySelector('.profile__add-button');
 // // Переменные попапа "Обновить аватар"
 export const avatarButton = document.querySelector('.profile__avatar-button');
-export const avatarImg = document.querySelector('.profile__avatar');
+
