@@ -4,12 +4,10 @@ export class Api {
     this._headers = options.headers;
   }
 
-  // Получить информацию о пользователе с сервера
-  getUserInformation() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: 'GET',
-      headers: this._headers
-    })
+  // Послать запрос
+  _sendRequest(url, options) {
+
+    return fetch(url, options)
       .then((res) => {
         if (res.ok) {
           return res.json();
@@ -18,116 +16,78 @@ export class Api {
       })
   }
 
-  // Получить начальные карточки с сервера
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+  // Получить информацию о пользователе с сервера
+  getUserInformation() {
+    return this._sendRequest(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-   }
+  }
+
+  // Получить начальные карточки с сервера
+  getInitialCards() {
+    return this._sendRequest(`${this._baseUrl}/cards`, {
+      method: 'GET',
+      headers: this._headers
+    })
+  }
 
   // Сохранить информацию о пользователе на сервере
   savetUserInformation(name, about) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._sendRequest(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: {...this._headers, ...{'Content-Type': 'application/json'}},
+      headers: { ...this._headers, ...{ 'Content-Type': 'application/json' } },
       body: JSON.stringify({
         name: name,
         about: about
       })
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-   }
+  }
 
   // Добавить на сервер новую карточку
   addNewCard(name, link) {
-    return fetch(`${this._baseUrl}/cards`, {
+    return this._sendRequest(`${this._baseUrl}/cards`, {
       method: 'POST',
-      headers: {...this._headers, ...{'Content-Type': 'application/json'}},
+      headers: { ...this._headers, ...{ 'Content-Type': 'application/json' } },
       body: JSON.stringify({
         name: name,
         link: link
       })
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
   }
-
-  // Отображение количества лайков карточки
-  // Содержит массив пользователей
-  counterLike() { }
 
   // Удаление карточки
   deletСard(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+    return this._sendRequest(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
   }
 
   // Постановка и снятие лайка
   // Постановка лайка
   setLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-    method: 'PUT',
-    headers: this._headers
-  })
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
+    return this._sendRequest(`${this._baseUrl}/cards/${cardId}/likes`, {
+      method: 'PUT',
+      headers: this._headers
     })
   }
   // Снятие лайка
   deletLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
+    return this._sendRequest(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
   }
 
   // Обновление аватара пользователя
   changeАvatar(avatar) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return this._sendRequest(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: {...this._headers, ...{'Content-Type': 'application/json'}},
+      headers: { ...this._headers, ...{ 'Content-Type': 'application/json' } },
       body: JSON.stringify({
         avatar: avatar,
       })
     })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-   }
+  }
 }

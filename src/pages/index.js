@@ -30,7 +30,6 @@ import { profileAddButton } from '../scripts/utils/constants.js';
 // Переменные попапа "Обновить аватар"
 import { avatarButton } from '../scripts/utils/constants.js';
 import { avatarImg } from '../scripts/utils/constants.js';
-import { deleteCardButton } from '../scripts/utils/constants.js';
 
 
 // Создание экземпляров класса Api
@@ -42,22 +41,13 @@ const api = new Api({
   }
 });
 
-// .catch((err) => {
-//   console.log(err); // выведем ошибку в консоль
-// });
-
-// .then((data) => {
-//   console.log(data);
-// });
-
 // Создание экземпляров класса UserInfo
 const userInfoProfile = new UserInfo('.profile__title', '.profile__subtitle');
-
 
 let cardList;
 api.getUserInformation().then((userData) => {
   userInfoProfile.setUserInfo(userData.name, userData.about)
-
+  avatarImg.src = userData.avatar;
   // Публикация карточек
   // Отрисовка каждого отдельного элемента
   // Функция renderer
@@ -83,21 +73,32 @@ api.getUserInformation().then((userData) => {
 
 
 // Создание экземпляров класса PopupWithForm для попапа "Редактирования профиля"
-const popupEditProfile = new PopupWithForm('.popup_edit', (evt, data) => {
+const popupEditProfile = new PopupWithForm('.popup_edit', (evt, data, button) => {
   const { name, info } = data;
+
+  renderLoading(button, 'Сохранение...');
+
   api.savetUserInformation(name, info)
     .then((data) => {
       userInfoProfile.setUserInfo(name, info);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => {
+      renderLoading(button, 'Сохранить');
+      popupEditProfile.close();
     });
-
-  popupEditProfile.close();
 },
   false
 );
 popupEditProfile.setEventListeners();
+
+
+// Функция которя меняет текст кнопки, пока идет загрузка
+function renderLoading(button, text) {
+  button.textContent = text;
+}
 
 // Создание экземпляров класса PopupWithForm для попапа "Добавления карточки"
 const popupAddCard = new PopupWithForm('.popup_add', handleFormCardSubmit, true);
@@ -106,10 +107,6 @@ popupAddCard.setEventListeners();
 // Создание экземпляров класса PopupWithImage
 const popupOpenImage = new PopupWithImage('.popup_img');
 popupOpenImage.setEventListeners();
-
-// Создание экземпляров класса PopupWithForm для попапа "Обновить аватар"
-const popupAvatar = new PopupWithForm('.popup_avatar', handleFormAvatarSubmit, true);
-popupAvatar.setEventListeners();
 
 // Создание экземпляров класса PopupWithConfirmation для попапа "Удалить карточку"
 const popupConfirm = new PopupWithConfirmation('.popup_confirm', handleFormConfirmSubmit, true);
@@ -143,9 +140,10 @@ function createCard(item, userId) {
 
 // Функция закрытия попапа "добавления карточки"
 // И добавление новой карточки после заполнения полей
-export function handleFormCardSubmit(evt, data) {
+export function handleFormCardSubmit(evt, data, button) {
   evt.preventDefault();
 
+  renderLoading(button, 'Сохранение...');
   api.addNewCard(data.name, data.link)
     .then((data) => {
       const cardElement = createCard(data);
@@ -154,6 +152,9 @@ export function handleFormCardSubmit(evt, data) {
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => {
+      renderLoading(button, 'Добавить');
     });
 }
 
@@ -192,7 +193,6 @@ function openPopupEdit(popup, info) {
   formValidators['edit-profile'].resetValidation();
 }
 
-
 // Функция открытия попапа "добавление карточки"
 function openPopupAdd(popup) {
   popup.open(popup);
@@ -203,13 +203,28 @@ profileAddButton.addEventListener('click', function (evt) {
   openPopupAdd(popupAddCard);
 });
 
+
+// Создание экземпляров класса PopupWithForm для попапа "Обновить аватар"
+const popupAvatar = new PopupWithForm('.popup_avatar', handleFormAvatarSubmit, true);
+popupAvatar.setEventListeners();
+
 // Функция закрытия попапа "Обновить аватар"
 // И добновление нового изображения на аватарку после заполнения полей
-export function handleFormAvatarSubmit(evt, data) {
+export function handleFormAvatarSubmit(evt, data, button) {
   evt.preventDefault();
 
-  avatarImg.src = data.avatar;
-  popupAvatar.close(popupAvatar);
+  renderLoading(button, 'Сохранение...');
+  api.changeАvatar(data.avatar)
+    .then((data) => {
+      avatarImg.src = data.avatar;
+    })
+    .catch((err) => {
+      console.log(err); // выведем ошибку в консоль
+    })
+    .finally(() => {
+      renderLoading(button, 'Сохранить');
+      popupAvatar.close();
+    });
 }
 
 // Слушатель открытия попапа "Обновить аватар"
@@ -222,30 +237,5 @@ function openPopupAvatar(popup) {
   popup.open(popup);
 }
 
-///////////////////////////////////////////////////////////////////////////////////
 
 
-
-// // Слушатель открытия попапа "Удаление карточки"
-// deleteCardButton.addEventListener('click', function (evt) {
-//   openPopupConfirmDeletCard(popupConfirm);
-// });
-
-
-
-// // Функция открытия попапа "Удаление карточки"
-// function openPopupConfirmDeletCard(popup) {
-//   popup.open(popup);
-// }
-
-
-////////////////////////////////////////////////////////////////////////////
-// function renderLoading(isLoading) {
-//   if (isLoading) {
-//     spinner.classList.add('spinner_visible');
-//     content.classList.add('content_hidden');
-//   } else {
-//     spinner.classList.remove('spinner_visible');
-//     content.classList.remove('content_hidden');
-//   }
-// }

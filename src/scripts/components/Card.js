@@ -60,10 +60,6 @@ export class Card {
       this._handleLikeCard(evt);
     });
 
-    // this._cardDeleteButton.addEventListener('click', (evt) => {
-    //   this._handleDeleteCard(evt);
-    // });
-
     this._cardImage.addEventListener('click', () => {
       this._handleCardClick(this._data.name, this._data.link)
     });
