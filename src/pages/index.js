@@ -29,7 +29,6 @@ import { infoInput } from '../scripts/utils/constants.js';
 import { profileAddButton } from '../scripts/utils/constants.js';
 // Переменные попапа "Обновить аватар"
 import { avatarButton } from '../scripts/utils/constants.js';
-import { avatarImg } from '../scripts/utils/constants.js';
 
 
 // Создание экземпляров класса Api
@@ -216,8 +215,7 @@ export function handleFormAvatarSubmit(evt, data, button) {
   renderLoading(button, 'Сохранение...');
   api.changeAvatar(data.avatar)
     .then((data) => {
-      avatarImg.src = data.avatar;
-      //userInfoProfile.setUserAvatar(userData.avatar);
+      userInfoProfile.setUserAvatar(data.avatar);
     })
     .catch((err) => {
       console.log(err); // выведем ошибку в консоль

@@ -6,16 +6,15 @@ export class PopupWithConfirmation extends Popup {
     this._handleFormConfirmSubmit = handleFormConfirmSubmit.bind(this);
   }
 
-  open(evt, card) {
+  open(evt, item) {
     super.open();
-    this._card = card;
+    this._item = item;
   }
 
   setEventListeners() {
     super.setEventListeners();
     this._popupElement.addEventListener('submit', (evt) => {
-      this._handleFormConfirmSubmit(evt, this._card);
-      this.close();
+      this._handleFormConfirmSubmit(evt, this._item);
     });
   }
 }
