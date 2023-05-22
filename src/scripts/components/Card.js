@@ -6,7 +6,7 @@ export class Card {
     this._handleFormConfirmSubmit = handleFormConfirmSubmit;
     this._api = api;
     this._liked = data.likes.find((el) => el._id === userId) !== undefined;
-    this._isMy = data.id === userId;
+    this._isMy = data.owner._id === userId;
   }
 
   getData() {
