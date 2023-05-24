@@ -179,7 +179,7 @@ enableValidation(settingsObject);
 // Слушатель открытия попапа редактирования профиля
 // Открывается по кнопке редактирования
 profileEditButton.addEventListener('click', function (evt) {
-  openPopupEdit(popupEditProfile, userInfoProfile);
+  openPopupEdit();
 });
 
 // Функция открытия попапа "редактирование профиля"
@@ -199,7 +199,7 @@ function openPopupAdd() {
 
 // Слушатель открытия попапа "добавление карточки"
 profileAddButton.addEventListener('click', function (evt) {
-  openPopupAdd(popupAddCard);
+  openPopupAdd();
 });
 
 
@@ -228,7 +228,7 @@ export function handleFormAvatarSubmit(evt, data, button) {
 
 // Слушатель открытия попапа "Обновить аватар"
 avatarButton.addEventListener('click', function (evt) {
-  openPopupAvatar(popupAvatar);
+  openPopupAvatar();
 });
 
 // Функция открытия попапа "Обновить аватар"
